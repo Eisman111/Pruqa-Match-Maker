@@ -1,0 +1,49 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.pruqa'
+version = '0.0.1'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "Greenwich.SR1")
+}
+
+dependencies {
+
+    compileOnly (
+            // Lombok
+            'org.projectlombok:lombok'
+    )
+
+    implementation (
+            'org.springframework.boot:spring-boot-starter-logging',
+            'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client',
+            'org.springframework.cloud:spring-cloud-starter-netflix-zuul',
+            'org.springframework.cloud:spring-cloud-starter-oauth2', 
+            'org.springframework.cloud:spring-cloud-starter-security'
+    )
+    
+    testImplementation (
+            'org.springframework.boot:spring-boot-starter-test'
+    )
+    
+    annotationProcessor (
+            // Lombok
+            'org.projectlombok:lombok'
+    )
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

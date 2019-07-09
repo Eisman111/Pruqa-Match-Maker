@@ -1,0 +1,81 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'java'
+    id "org.openapi.generator" version "4.0.2"
+    id "groovy"
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.pruqa'
+version = '0.0.1'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+openApiGenerate {
+    generatorName = "java"
+    inputSpec = "$rootDir/src/main/resources/specs/matchmaker-settings-v0.0.1.yaml".toString()
+    outputDir = "$rootDir".toString()
+    apiPackage = "com.pruqa.matchmakerpreparer.generated"
+    invokerPackage = "com.pruqa.matchmakerpreparer.generated.invoker"
+    modelPackage = "com.pruqa.matchmakerpreparer.generated.model"
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "Greenwich.SR1")
+}
+
+dependencies {
+
+    compileOnly 'org.projectlombok:lombok'
+
+    compile (
+            // Generated client dependency
+            'com.squareup.okhttp3:okhttp:3.14.2',
+            'com.squareup.okhttp3:logging-interceptor:3.14.2',
+            'com.google.code.gson:gson:2.8.5',
+            'io.gsonfire:gson-fire:1.8.3',
+            'org.apache.commons:commons-lang3:3.9',
+            'org.threeten:threetenbp:1.3.8'
+    )
+
+    implementation (
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-amqp',
+            'org.springframework.boot:spring-boot-starter-logging',
+            'org.springframework.boot:spring-boot-starter-actuator',
+            'org.springframework.boot:spring-boot-starter-data-mongodb',
+            'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client',
+            // Groovy
+            'org.codehaus.groovy:groovy-all:3.0.0-beta-1',
+            // Swagger
+            'io.springfox:springfox-swagger2:2.9.2',
+            'io.springfox:springfox-swagger-ui:2.9.2',
+    )
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation (
+            // Spring Test
+            'org.springframework.boot:spring-boot-starter-test',
+
+            // Spock
+            'org.spockframework:spock-core:1.3-groovy-2.5',
+            'org.spockframework:spock-spring:1.3-groovy-2.5'
+    )
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

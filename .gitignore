@@ -1,5 +1,48 @@
-# Ignore Gradle project-specific cache directory
+HELP.md
 .gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+local.properties
 
-# Ignore Gradle build output directory
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Commong build ###
 build
+
+### Production properites ###
+application-prod.properties
+
+### Generated files ###
+pom.xml
+.openapi-generator
+docs
+out
+build.sbt
+git_push.sh
+.travis.yml
+.openapi-generator-ignore
+generated

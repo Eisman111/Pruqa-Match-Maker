@@ -8,3 +8,13 @@
  */
 
 rootProject.name = 'PruqaMatchMaker'
+
+include 'starter-service'
+include 'settings-service'
+include 'preparer-service'
+include 'gateway-service'
+include 'discovery-service'
+include 'combiner-service'
+include 'authorization-service'
+include 'admin-service'
+include 'matchmaker-library'

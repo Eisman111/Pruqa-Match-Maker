@@ -1,0 +1,266 @@
+openapi: 3.0.1
+info:
+  title: MatchMaker Settings API
+  description: '"Match maker tool"'
+  contact:
+    name: Unknown
+    url: https://www.paoloamosso.com
+    email: email@gmail.com
+  license:
+    name: Apache License Version 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0"
+  version: 0.0.1
+servers:
+  - url: //localhost:8080/settings
+tags:
+  - name: settings-controller
+    description: Settings Controller
+paths:
+  /api/v1/internal/companies/verify:
+    post:
+      tags:
+        - settings-controller
+      summary: Verify the company
+      description: This operation can be used to verify the company and the game definition
+      operationId: verifyCompanyUsingPOST
+      parameters:
+        - name: requestId
+          in: header
+          description: requestId
+          required: true
+          schema:
+            type: string
+        - name: sessionId
+          in: header
+          description: sessionId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: companyRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequest'
+        required: true
+      responses:
+        200:
+          description: The service received correctly the request
+          content:
+            application/json:
+              schema:
+                type: string
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Game not found by company ID and game ID
+          content: {}
+        406:
+          description: Game settings and rules are not valid
+          content: {}
+      deprecated: false
+  /api/v1/internal/games/get:
+    post:
+      tags:
+        - settings-controller
+      summary: Recover the game Rules
+      description: This operation can be used to recover the Game Rules
+      operationId: getGameRulesUsingPOST
+      parameters:
+        - name: requestId
+          in: header
+          description: Id of the request
+          required: true
+          schema:
+            type: string
+        - name: sessionId
+          in: header
+          description: Id of the session
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: settingsRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingsRequest'
+        required: true
+      responses:
+        200:
+          description: The service received correctly the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameSetting'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Game not found by company ID and game ID
+          content: {}
+        406:
+          description: Game settings and rules are not valid
+          content: {}
+      deprecated: false
+  /api/v1/public/games/add:
+    post:
+      tags:
+        - settings-controller
+      summary: Add a game to the list
+      description: This operation can be used to add a game to the system
+      operationId: addGameUsingPOST
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: requestId
+          in: header
+          description: Id of the request
+          required: true
+          schema:
+            type: string
+        - name: sessionId
+          in: header
+          description: Id of the session
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: game
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+        required: true
+      responses:
+        200:
+          description: The service received correctly the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+components:
+  schemas:
+    GameResponse:
+      title: GameResponse
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Input Company name
+        gameName:
+          type: string
+          description: Input Game name
+    Game:
+      title: Game
+      type: object
+      properties:
+        gameName:
+          type: string
+          description: Name of the game
+        gameSetting:
+          $ref: '#/components/schemas/GameSetting'
+        responseEndpoint:
+          type: string
+          description: Company endpoint for callback
+    GameAttribute:
+      title: GameAttribute
+      type: object
+      properties:
+        absoluteRange:
+          type: number
+          description: Absolute range of verification for the entire attributes
+          format: double
+        attributeMultiplier:
+          type: number
+          description: Attribute multiplier
+          format: double
+        attributeName:
+          type: string
+          description: Name of the attribute
+        incrementalRounds:
+          type: integer
+          description: Number of rounds of incrementation for match making
+          format: int32
+        incrementalWaitTime:
+          type: integer
+          description: Wait time in milliseconds before increasing match search
+          format: int32
+        percentageRange:
+          type: number
+          description: Percentage range of verification for the entire attributes
+          format: double
+    SettingsRequest:
+      title: SettingsRequest
+      type: object
+      properties:
+        gameName:
+          type: string
+          description: Name of the game present on our database
+    CompanyRequest:
+      title: CompanyRequest
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of the company is necessary to identify your settings
+        gameName:
+          type: string
+          description: Name of the game present on our database
+    GameSetting:
+      title: GameSetting
+      type: object
+      properties:
+        absoluteRange:
+          type: number
+          description: Absolute range of verification for the entire attributes
+          format: double
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GameAttribute'
+        incrementalRounds:
+          type: integer
+          description: Number of rounds of incrementation for match making
+          format: int32
+        incrementalWaitTime:
+          type: integer
+          description: Wait time in milliseconds before increasing match search
+          format: int32
+        matchMode:
+          type: string
+          description: Mode of the game
+          enum:
+            - COUNTER
+        percentageRange:
+          type: number
+          description: Percentage range of verification for the entire attributes
+          format: double
