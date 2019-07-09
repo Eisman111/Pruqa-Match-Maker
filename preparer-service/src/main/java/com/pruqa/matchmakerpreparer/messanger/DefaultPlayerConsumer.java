@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class DefaultPlayerConsumer implements IPlayerConsumer{
+public class DefaultPlayerConsumer implements PlayerConsumer {
 
     private IPreparerService service;
 

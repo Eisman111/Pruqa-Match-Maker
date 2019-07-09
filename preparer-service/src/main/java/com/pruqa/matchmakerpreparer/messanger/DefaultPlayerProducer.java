@@ -1,6 +1,6 @@
 package com.pruqa.matchmakerpreparer.messanger;
 
-import com.pruqa.matchmakerpreparer.model.MessagePlayer;
+import com.pruqa.matchmakerlibrary.model.FailureMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class DefaultPlayerProducer implements IPlayerProducer {
+public class DefaultPlayerProducer implements PlayerProducer {
 
     private RabbitTemplate failureRabbitTemplate;
 
@@ -18,8 +18,8 @@ public class DefaultPlayerProducer implements IPlayerProducer {
     }
 
     @Override
-    public void addToErrorQueue(MessagePlayer messagePlayer) {
-        log.error("An error occurred here, {}", messagePlayer.toString());
-        failureRabbitTemplate.convertAndSend(messagePlayer);
+    public void addToErrorQueue(FailureMessage failureMessage) {
+        log.error("An error occurred here, {}", failureMessage.toString());
+        failureRabbitTemplate.convertAndSend(failureMessage);
     }
 }

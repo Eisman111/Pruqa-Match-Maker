@@ -12,12 +12,12 @@ import spock.lang.Specification
 class PlayerConsumerTest extends Specification {
 
     private IPreparerService service
-    private IPlayerConsumer consumer
-    private IPlayerProducer producer
+    private PlayerConsumer consumer
+    private PlayerProducer producer
 
     def setup() {
         service = Stub(IPreparerService)
-        producer = Mock(IPlayerProducer)
+        producer = Mock(PlayerProducer)
         consumer = new DefaultPlayerConsumer(service, producer)
     }
 

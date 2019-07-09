@@ -1,6 +1,9 @@
 package com.pruqa.matchmakerpreparer.config;
 
 import com.google.common.collect.Queues;
+import com.pruqa.matchmakerpreparer.messanger.DefaultPlayerProducer;
+import com.pruqa.matchmakerpreparer.messanger.FailureQueueMessageRecoverer;
+import com.pruqa.matchmakerpreparer.messanger.PlayerProducer;
 import org.aopalliance.aop.Advice;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
@@ -40,9 +43,12 @@ public class RabbitConfig {
 
     private ConnectionFactory connectionFactory;
 
+    private PlayerProducer playerProducer;
+
     @Autowired
-    public RabbitConfig (final ConnectionFactory connectionFactory) {
+    public RabbitConfig (final ConnectionFactory connectionFactory, final DefaultPlayerProducer defaultPlayerProducer) {
         this.connectionFactory = connectionFactory;
+        this.playerProducer = defaultPlayerProducer;
     }
 
     // ==== beans ====
@@ -162,6 +168,7 @@ public class RabbitConfig {
         return RetryInterceptorBuilder.stateless().maxAttempts(3)
                 .backOffOptions(1000,
                         3.0, 10000)
-                .recoverer(new RejectAndDontRequeueRecoverer()).build();  //TODO write a error requeue policy
+                .recoverer(new FailureQueueMessageRecoverer(playerProducer))
+                .build();
     }
 }

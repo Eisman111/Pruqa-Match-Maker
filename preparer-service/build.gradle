@@ -36,6 +36,8 @@ ext {
 
 dependencies {
 
+    compile project(':matchmaker-library')
+
     compileOnly 'org.projectlombok:lombok'
 
     compile (
