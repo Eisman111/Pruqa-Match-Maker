@@ -1,6 +1,5 @@
 HELP.md
 .gradle
-/build/
 !gradle/wrapper/gradle-wrapper.jar
 local.properties
 
@@ -31,7 +30,7 @@ local.properties
 .vscode/
 
 ### Commong build ###
-build
+build/
 
 ### Production properites ###
 application-prod.properties
@@ -39,10 +38,10 @@ application-prod.properties
 ### Generated files ###
 pom.xml
 .openapi-generator
-docs
-out
+docs/
+out/
 build.sbt
 git_push.sh
 .travis.yml
 .openapi-generator-ignore
-generated
+generated/

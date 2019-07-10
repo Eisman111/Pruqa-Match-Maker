@@ -5,10 +5,14 @@
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds/
  */
 
-allprojects {
+subprojects {
     apply plugin: 'java'
 
     repositories {
         mavenCentral()
+    }
+    
+    dependencies {
+        compile project(':matchmaker-library')
     }
 }

@@ -43,12 +43,9 @@ public class RabbitConfig {
 
     private ConnectionFactory connectionFactory;
 
-    private PlayerProducer playerProducer;
-
     @Autowired
-    public RabbitConfig (final ConnectionFactory connectionFactory, final DefaultPlayerProducer defaultPlayerProducer) {
+    public RabbitConfig (final ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
-        this.playerProducer = defaultPlayerProducer;
     }
 
     // ==== beans ====
@@ -153,22 +150,21 @@ public class RabbitConfig {
     }
 
     @Bean
-    public SimpleRabbitListenerContainerFactory listenerContainerFactory() {
+    public SimpleRabbitListenerContainerFactory listenerContainerFactory(PlayerProducer defaultPlayerProducer) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(jsonMessageConverter());
         factory.setConcurrentConsumers(3);
         factory.setMaxConcurrentConsumers(10);
-        factory.setAdviceChain(retries());
+        factory.setAdviceChain(retries(defaultPlayerProducer));
         return factory;
     }
 
     @Bean
-    public RetryOperationsInterceptor retries() {
+    public RetryOperationsInterceptor retries(PlayerProducer defaultPlayerProducer) {
         return RetryInterceptorBuilder.stateless().maxAttempts(3)
-                .backOffOptions(1000,
-                        3.0, 10000)
-                .recoverer(new FailureQueueMessageRecoverer(playerProducer))
+                .backOffOptions(1000,3.0, 10000)
+                .recoverer(new FailureQueueMessageRecoverer(defaultPlayerProducer))
                 .build();
     }
 }
