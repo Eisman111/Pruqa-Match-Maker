@@ -1,11 +1,11 @@
-package com.pruqa.matchmakercombiner.model;
+package com.pruqa.matchmakerlibrary.model;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class MatchedPlayerMessage {
+public class SuccessMatchMessage {
 
     private String playerOneId;
 

@@ -1,7 +1,7 @@
 package com.pruqa.matchmakerpreparer.messanger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pruqa.matchmakerlibrary.model.FailureMessage;
+import com.pruqa.matchmakerlibrary.model.FailureMatchMessage;
 import com.pruqa.matchmakerlibrary.model.ResponseCode;
 import com.pruqa.matchmakerpreparer.model.MessagePlayer;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class FailureQueueMessageRecoverer extends RejectAndDontRequeueRecoverer 
         try {
             MessagePlayer messagePlayer = new ObjectMapper().readValue(message.getBody(),MessagePlayer.class);
 
-            messageProducer.addToErrorQueue(FailureMessage
+            messageProducer.addToErrorQueue(FailureMatchMessage
                     .builder()
                     .failureCode(ResponseCode.GENERIC_ERROR)
                     .failureMessage(cause.getMessage())

@@ -5,7 +5,7 @@ import com.pruqa.matchmakercombiner.messanger.CombinerProducer;
 import com.pruqa.matchmakercombiner.messanger.DefaultCombinerProducer;
 import com.pruqa.matchmakercombiner.model.MatchMakingStatus;
 import com.pruqa.matchmakercombiner.model.MatchOperation;
-import com.pruqa.matchmakercombiner.model.MatchedPlayerMessage;
+import com.pruqa.matchmakerlibrary.model.SuccessMatchMessage;
 import com.pruqa.matchmakercombiner.model.Player;
 import com.pruqa.matchmakercombiner.repository.PlayerRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -118,8 +118,8 @@ public class CounterCombinerService extends CombinerService {
         combinerProducer.addToSuccessQueue(buildMatchedPlayersMessage(player, matchedPlayer));
     }
 
-    private MatchedPlayerMessage buildMatchedPlayersMessage(final Player player, final Player matchedPlayer) {
-        return MatchedPlayerMessage
+    private SuccessMatchMessage buildMatchedPlayersMessage(final Player player, final Player matchedPlayer) {
+        return SuccessMatchMessage
                 .builder()
                 .playerOneId(player.getPlayerId())
                 .playerTwoId(matchedPlayer.getPlayerId())

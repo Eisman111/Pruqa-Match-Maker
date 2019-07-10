@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class FailureMessage {
+public class FailureMatchMessage {
 
     private ResponseCode failureCode;
     private String failureMessage;
