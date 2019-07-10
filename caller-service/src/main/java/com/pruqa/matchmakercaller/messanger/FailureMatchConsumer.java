@@ -1,8 +1,8 @@
 package com.pruqa.matchmakercaller.messanger;
 
-import com.pruqa.matchmakerlibrary.model.SuccessMatchMessage;
+import com.pruqa.matchmakerlibrary.model.FailureMatchMessage;
 
 public interface FailureMatchConsumer {
 
-    void readMessage(final SuccessMatchMessage messagePlayer);
+    void readMessage(final FailureMatchMessage messagePlayer);
 }

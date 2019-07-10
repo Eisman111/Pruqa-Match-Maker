@@ -23,6 +23,14 @@ public interface SettingsServiceInterface {
     GameSetting fetchGameSettings(final SettingsRequest settingsRequest);
 
     /**
+     * Fetch the company api settings
+     *
+     * @param companyApiRequest gameName
+     * @return company api settings
+     */
+    CompanyApiResponse fetchCompanyApi(final CompanyApiRequest companyApiRequest);
+
+    /**
      * Add a game to the database
      * @param game rest input object
      * @return addGameResponse

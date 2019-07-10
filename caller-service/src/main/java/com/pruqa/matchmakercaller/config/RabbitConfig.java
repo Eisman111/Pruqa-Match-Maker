@@ -21,13 +21,13 @@ import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 public class RabbitConfig {
 
     // ==== fields ====
-    @Value("${app.rabbitmq.queue}")
+    @Value("${app.success.rabbitmq.queue}")
     private String queueName;
 
-    @Value("${app.rabbitmq.exchange}")
+    @Value("${app.success.rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${app.rabbitmq.routingkey}")
+    @Value("${app.success.rabbitmq.routingkey}")
     private String routingKey;
 
     @Value("${app.failure.rabbitmq.queue}")

@@ -71,6 +71,24 @@ public class SettingsController {
     }
 
     /**
+     * Endpoint for recovering the company api settings
+     *
+     * @param companyApiRequest request objected
+     * @return generic response of type gameResponse
+     */
+    @ApiOperation(value = "Recover the company api settings",
+            notes = "This operation can be used to recover the company api settings")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The service received correctly the request"),
+            @ApiResponse(code = 404, message = "Game not found"),
+            @ApiResponse(code = 406, message = "Settings are not valid")
+    })
+    @RequestMapping(value = "/internal/company/get", method = RequestMethod.POST)
+    public ResponseEntity<CompanyApiResponse> getCompanyApiSettings (@Valid @RequestBody CompanyApiRequest companyApiRequest) {
+        return ResponseEntity.ok(settingsService.fetchCompanyApi(companyApiRequest));
+    }
+
+    /**
      * Endpoint for verifying the company details
      *
      * @param game request objected

@@ -45,6 +45,11 @@ public abstract class SettingsService implements SettingsServiceInterface {
         return addGameToDB(principal, game);
     }
 
+    @Override
+    public CompanyApiResponse fetchCompanyApi(CompanyApiRequest companyApiRequest) {
+        return fetchCompanyApiByGameName(companyApiRequest);
+    }
+
     // ==== abstract methods ====
     /**
      * Verify if the company and the game are registered
@@ -76,4 +81,7 @@ public abstract class SettingsService implements SettingsServiceInterface {
      * @return addGameResponse
      */
     abstract GameResponse addGameToDB(final Principal princial, final Game game);
+
+
+    abstract CompanyApiResponse fetchCompanyApiByGameName(CompanyApiRequest companyApiRequest);
 }

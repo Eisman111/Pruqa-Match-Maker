@@ -67,7 +67,7 @@ public class DefaultSettingsService extends SettingsService {
 
         //TODO really need this? Rest validation isn't enough?
 
-        if (game.getResponseEndpoint() == null) {
+        if (game.getSuccessResponseEndpoint() == null) {
             log.error("The game settings recovered in the database are not valid to be used. {}", game.toString());
             throw new InvalidGameSettingsException();
         }
@@ -129,5 +129,22 @@ public class DefaultSettingsService extends SettingsService {
         log.debug("The registered game is {}", resultGame.toString());
 
         return new GameResponse(principal.getName(),resultGame.getGameName());
+    }
+
+    @Override
+    CompanyApiResponse fetchCompanyApiByGameName(CompanyApiRequest companyApiRequest) {
+        Game game = gameRepository.findByGameName(companyApiRequest.getGameName());
+
+        if (game == null) {
+            log.error("While trying to fetch the company api settings we have not found the game for: {}", companyApiRequest.getGameName());
+            throw new InvalidCompanyException();
+        }
+
+        return CompanyApiResponse
+                .builder()
+                .companyName(game.getCompanyName())
+                .successResponseEndpoint(game.getSuccessResponseEndpoint())
+                .failureResponseEndpoint(game.getFailureResponseEndpoint())
+                .build();
     }
 }
