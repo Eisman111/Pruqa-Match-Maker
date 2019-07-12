@@ -1,4 +1,4 @@
-package com.pruqa.matchmakerlibrary.model;
+package com.pruqa.acmedemocompany.model;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -6,7 +6,9 @@ import lombok.ToString;
 @Getter
 @ToString
 public enum ResponseCode {
+
     MATCHED,
-    NO_MATCHING_PLAYER,
+    INVALID_PLAYER_ATTRIBUTES,
+    NO_MATCHING_PLAYERS,
     GENERIC_ERROR
 }

@@ -16,13 +16,22 @@ configurations {
     }
 }
 
-openApiGenerate {
+task buildSettingsClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
     generatorName = "java"
     inputSpec = "$rootDir/src/main/resources/specs/matchmaker-settings-v0.0.1.yaml".toString()
     outputDir = "$rootDir".toString()
-    apiPackage = "com.pruqa.matchmakercaller.generated"
-    invokerPackage = "com.pruqa.matchmakercaller.generated.invoker"
-    modelPackage = "com.pruqa.matchmakercaller.generated.model"
+    apiPackage = "com.pruqa.matchmakercaller.generated.settings"
+    invokerPackage = "com.pruqa.matchmakercaller.generated.settings.invoker"
+    modelPackage = "com.pruqa.matchmakercaller.generated.settings.model"
+}
+
+task buildCallerClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
+    generatorName = "java"
+    inputSpec = "$rootDir/src/main/resources/specs/matchmaker-caller-v0.0.1.yaml".toString()
+    outputDir = "$rootDir".toString()
+    apiPackage = "com.pruqa.matchmakercaller.generated.caller"
+    invokerPackage = "com.pruqa.matchmakercaller.generated.caller.invoker"
+    modelPackage = "com.pruqa.matchmakercaller.generated.caller.model"
 }
 
 repositories {
@@ -45,7 +54,14 @@ dependencies {
             'org.threeten:threetenbp:1.3.8'
     )
     
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation (
+            'org.springframework.boot:spring-boot-starter-actuator',
+
+            // Swagger
+            'io.springfox:springfox-swagger2:2.9.2',
+            'io.springfox:springfox-swagger-ui:2.9.2'
+    )
+
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'

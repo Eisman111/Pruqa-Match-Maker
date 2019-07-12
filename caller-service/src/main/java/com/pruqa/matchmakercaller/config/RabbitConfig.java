@@ -21,23 +21,14 @@ import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 public class RabbitConfig {
 
     // ==== fields ====
-    @Value("${app.success.rabbitmq.queue}")
+    @Value("${app.result.rabbitmq.queue}")
     private String queueName;
 
-    @Value("${app.success.rabbitmq.exchange}")
+    @Value("${app.result.rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${app.success.rabbitmq.routingkey}")
+    @Value("${app.result.rabbitmq.routingkey}")
     private String routingKey;
-
-    @Value("${app.failure.rabbitmq.queue}")
-    private String failureQueueName;
-
-    @Value("${app.failure.rabbitmq.exchange}")
-    private String failureExchange;
-
-    @Value("${app.failure.rabbitmq.routingkey}")
-    private String failureRoutingKey;
 
     private ConnectionFactory connectionFactory;
 
@@ -78,36 +69,6 @@ public class RabbitConfig {
     }
 
     /**
-     * Defined the name of the queue and durability settings
-     * @return queue name
-     */
-    @Bean
-    Queue failureQueue() {
-        return new Queue(failureQueueName, false);
-    }
-
-    /**
-     * Exchange that will be used in the queue
-     *
-     * @return successExchange name
-     */
-    @Bean
-    DirectExchange failureExchange() {
-        return new DirectExchange(failureExchange);
-    }
-
-    /**
-     * Binding settings to build up dinamically a queue at first message sent
-     * @param failureQueue name to be used
-     * @param failureExchange name to be used
-     * @return binding
-     */
-    @Bean
-    Binding failureBinding(Queue failureQueue, DirectExchange failureExchange) {
-        return BindingBuilder.bind(failureQueue).to(failureExchange).with(failureRoutingKey);
-    }
-
-    /**
      * JSON converter for messages that are sent to the rabbit queue
      *
      * @return json message converter
@@ -128,21 +89,6 @@ public class RabbitConfig {
         final var rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setExchange(exchange);
         rabbitTemplate.setRoutingKey(routingKey);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter());
-        return rabbitTemplate;
-    }
-
-    /**
-     * Build the template that is required to send out messages to the queue defined in the properties
-     *
-     * @param connectionFactory default connection factory for rabbitmq
-     * @return rabbitTemplate
-     */
-    @Bean
-    public RabbitTemplate failureRabbitTemplate(final ConnectionFactory connectionFactory) {
-        final var rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setExchange(failureExchange);
-        rabbitTemplate.setRoutingKey(failureRoutingKey);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }

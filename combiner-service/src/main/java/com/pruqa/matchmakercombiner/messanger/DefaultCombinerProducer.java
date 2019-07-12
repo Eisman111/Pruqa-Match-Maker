@@ -1,26 +1,18 @@
 package com.pruqa.matchmakercombiner.messanger;
 
-import com.pruqa.matchmakerlibrary.model.SuccessMatchMessage;
-import com.pruqa.matchmakerlibrary.model.FailureMatchMessage;
+import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 public class DefaultCombinerProducer implements CombinerProducer {
 
-    private RabbitTemplate successRabbitTemplate;
-    private RabbitTemplate failureRabbitTemplate;
+    private RabbitTemplate rabbitTemplate;
 
-    public DefaultCombinerProducer(RabbitTemplate successRabbitTemplate, RabbitTemplate failureRabbitTemplate) {
-        this.successRabbitTemplate = successRabbitTemplate;
-        this.failureRabbitTemplate = failureRabbitTemplate;
+    public DefaultCombinerProducer(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Override
-    public void addToErrorQueue(final FailureMatchMessage failureMatchMessage) {
-        failureRabbitTemplate.convertAndSend(failureMatchMessage);
-    }
-
-    @Override
-    public void addToSuccessQueue(final SuccessMatchMessage successMatchMessage) {
-        successRabbitTemplate.convertAndSend(successMatchMessage);
+    public void addToResultQueue(final MatchResultMessage matchResultMessage) {
+        rabbitTemplate.convertAndSend(matchResultMessage);
     }
 }

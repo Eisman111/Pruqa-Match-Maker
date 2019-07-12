@@ -1,10 +1,9 @@
 package com.pruqa.matchmakercaller.service;
 
-import com.pruqa.matchmakercaller.generated.invoker.ApiException;
-import com.pruqa.matchmakerlibrary.model.ResultMessage;
-import com.pruqa.matchmakerlibrary.model.SuccessMatchMessage;
+import com.pruqa.matchmakercaller.generated.settings.invoker.ApiException;
+import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
 
 public interface IResultMatchService {
 
-    void notifyResultFlow(ResultMessage message) throws ApiException;
+    void notifyResultFlow(MatchResultMessage message) throws ApiException;
 }

@@ -32,14 +32,14 @@ public class RabbitConfig {
     @Value("${app.rabbitmq.routingkey}")
     private String routingKey;
 
-    @Value("${app.failure.rabbitmq.queue}")
-    private String failureQueueName;
+    @Value("${app.result.rabbitmq.queue}")
+    private String resultQueueName;
 
-    @Value("${app.failure.rabbitmq.exchange}")
-    private String failureExchange;
+    @Value("${app.result.rabbitmq.exchange}")
+    private String resultExchange;
 
-    @Value("${app.failure.rabbitmq.routingkey}")
-    private String failureRoutingKey;
+    @Value("${app.result.rabbitmq.routingkey}")
+    private String resultRoutingKey;
 
     private ConnectionFactory connectionFactory;
 
@@ -85,7 +85,7 @@ public class RabbitConfig {
      */
     @Bean
     Queue failureQueue() {
-        return new Queue(failureQueueName, false);
+        return new Queue(resultQueueName, false);
     }
 
     /**
@@ -95,7 +95,7 @@ public class RabbitConfig {
      */
     @Bean
     DirectExchange failureExchange() {
-        return new DirectExchange(failureExchange);
+        return new DirectExchange(resultExchange);
     }
 
     /**
@@ -106,7 +106,7 @@ public class RabbitConfig {
      */
     @Bean
     Binding failureBinding(Queue failureQueue, DirectExchange failureExchange) {
-        return BindingBuilder.bind(failureQueue).to(failureExchange).with(failureRoutingKey);
+        return BindingBuilder.bind(failureQueue).to(failureExchange).with(resultRoutingKey);
     }
 
     /**
@@ -143,8 +143,8 @@ public class RabbitConfig {
     @Bean
     public RabbitTemplate failureRabbitTemplate(final ConnectionFactory connectionFactory) {
         final var rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setExchange(failureExchange);
-        rabbitTemplate.setRoutingKey(failureRoutingKey);
+        rabbitTemplate.setExchange(resultExchange);
+        rabbitTemplate.setRoutingKey(resultRoutingKey);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }

@@ -1,12 +1,11 @@
 package com.pruqa.matchmakercaller.service;
 
-import com.pruqa.matchmakercaller.generated.SettingsControllerApi;
-import com.pruqa.matchmakercaller.generated.invoker.ApiException;
-import com.pruqa.matchmakercaller.generated.model.CompanyApiRequest;
-import com.pruqa.matchmakercaller.generated.model.CompanyApiResponse;
-import com.pruqa.matchmakerlibrary.model.FailureMatchMessage;
-import com.pruqa.matchmakerlibrary.model.ResultMessage;
-import com.pruqa.matchmakerlibrary.model.SuccessMatchMessage;
+import com.pruqa.matchmakercaller.generated.settings.SettingsControllerApi;
+import com.pruqa.matchmakercaller.generated.settings.invoker.ApiException;
+import com.pruqa.matchmakercaller.generated.settings.model.CompanyApiRequest;
+import com.pruqa.matchmakercaller.generated.settings.model.CompanyApiResponse;
+import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
+import com.pruqa.matchmakerlibrary.model.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,13 +29,11 @@ public class DefaultResultMatchService extends ResultMatchService {
     }
 
     @Override
-    void notifyResultMatch(ResultMessage resultMessage, CompanyApiResponse companyApiResponse) {
-        if (resultMessage instanceof SuccessMatchMessage) {
+    void notifyResultMatch(MatchResultMessage resultMessage, CompanyApiResponse companyApiResponse) {
+        if (resultMessage.getResponseCode().equals(ResponseCode.MATCHED)) {
             log.info("SUCCESS!!! message {}, response {}", resultMessage.toString(), companyApiResponse.toString());
-        } else if (resultMessage instanceof FailureMatchMessage) {
-            log.info("FAILURE!!! message {}, response {}", resultMessage.toString(), companyApiResponse.toString());
         } else {
-            log.error("The input result message is not of any type valid. {}", resultMessage.getClass().getCanonicalName());
+            log.info("FAILURE!!! message {}, response {}", resultMessage.toString(), companyApiResponse.toString());
         }
     }
 }

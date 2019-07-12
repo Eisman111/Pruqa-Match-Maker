@@ -1,8 +1,8 @@
 package com.pruqa.matchmakerpreparer.messanger;
 
-import com.pruqa.matchmakerlibrary.model.FailureMatchMessage;
+import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
 
 public interface PlayerProducer {
 
-    void addToErrorQueue(final FailureMatchMessage failureMatchMessage);
+    void addToErrorQueue(final MatchResultMessage matchResultMessage);
 }

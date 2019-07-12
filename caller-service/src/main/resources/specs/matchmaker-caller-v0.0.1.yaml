@@ -1,0 +1,95 @@
+openapi: 3.0.1
+info:
+  title: Match Maker Company Server API
+  description: '"Match maker tool"'
+  contact:
+    name: Unknown
+    url: https://www.paoloamosso.com
+    email: email@gmail.com
+  license:
+    name: Apache License Version 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0"
+  version: 0.0.1
+servers:
+  - url: //localhost:20000/
+tags:
+  - name: company-controller
+    description: Company Controller
+paths:
+  /matchmaking/v1/result:
+    post:
+      tags:
+        - company-controller
+      summary: Recover the game Rules
+      description: This operation can be used to recover the Game Rules
+      operationId: getMatchMakingResultUsingPOST
+      parameters:
+        - name: requestId
+          in: header
+          description: Id of the request
+          required: true
+          schema:
+            type: string
+        - name: sessionId
+          in: header
+          description: Id of the session
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: matchMakerResult
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MatchMakerResult'
+        required: true
+      responses:
+        200:
+          description: The service received correctly the request
+          content:
+            application/json:
+              schema:
+                type: string
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Game not found by company ID and game ID
+          content: {}
+        406:
+          description: Game settings and rules are not valid
+          content: {}
+      deprecated: false
+components:
+  schemas:
+    MatchMakerResult:
+      title: MatchMakerResult
+      type: object
+      properties:
+        gameName:
+          type: string
+          description: The game name referring to the the inputPlayer and matchedPlayer
+        inputPlayer:
+          type: string
+          description: The player tried to match with another player on the queue
+        matchedPlayer:
+          type: string
+          description: The player matched to the input player. Can be null in case
+            of errors
+        responseCode:
+          type: string
+          description: The response of the match making operation for the playerOne
+          enum:
+            - ResponseCode.MATCHED
+            - ResponseCode.INVALID_PLAYER_ATTRIBUTES
+            - ResponseCode.NO_MATCHING_PLAYERS
+            - ResponseCode.GENERIC_ERROR
+        responseMessage:
+          type: string
+          description: The response message that support the responseCode

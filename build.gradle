@@ -11,13 +11,50 @@ subprojects {
     repositories {
         mavenCentral()
     }
-    
+
     dependencies {
-        compile project(':matchmaker-library')
-        
+
         implementation(
                 // Spring logging
                 'org.springframework.boot:spring-boot-starter-logging'
         )
+    }
+}
+
+project(':matchmaker-library') {
+    configurations {
+        spi
+    }
+    task spiJar(type: Jar) {
+        archiveBaseName = 'api-spi'
+        from sourceSets.main.output
+        include('com/pruqa/matchmakerlibrary/**')
+    }
+    artifacts {
+        spi spiJar
+    }
+}
+
+project(':preparer-service') {
+    dependencies {
+
+        compile project(path: ':matchmaker-library', configuration: 'spi')
+//        compile project(':matchmaker-library')
+    }
+}
+
+project(':combiner-service') {
+    dependencies {
+        compile project(path: ':matchmaker-library', configuration: 'spi')
+
+//        compile project(':matchmaker-library')
+    }
+}
+
+project(':caller-service') {
+    dependencies {
+        compile project(path: ':matchmaker-library', configuration: 'spi')
+
+//        compile project(':matchmaker-library')
     }
 }

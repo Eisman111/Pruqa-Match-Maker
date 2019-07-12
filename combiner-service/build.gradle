@@ -24,6 +24,9 @@ ext {
 }
 
 dependencies {
+
+    compile project(':matchmaker-library')
+    
     implementation (
             'org.springframework.boot:spring-boot-starter-actuator', 
             'org.springframework.boot:spring-boot-starter-data-mongodb',

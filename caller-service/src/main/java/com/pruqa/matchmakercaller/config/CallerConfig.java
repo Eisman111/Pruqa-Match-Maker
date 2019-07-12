@@ -1,6 +1,7 @@
 package com.pruqa.matchmakercaller.config;
 
-import com.pruqa.matchmakercaller.generated.SettingsControllerApi;
+import com.pruqa.matchmakercaller.generated.caller.CompanyControllerApi;
+import com.pruqa.matchmakercaller.generated.settings.SettingsControllerApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,5 +15,14 @@ public class CallerConfig {
     @Bean
     public SettingsControllerApi settingsApi() {
         return new SettingsControllerApi();
+    }
+
+    /**
+     * Access to the Caller Service API
+     * @return companyControllerApi
+     */
+    @Bean
+    public CompanyControllerApi companyControllerApi() {
+        return new CompanyControllerApi();
     }
 }

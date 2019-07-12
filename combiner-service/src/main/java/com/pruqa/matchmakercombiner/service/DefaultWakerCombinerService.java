@@ -5,7 +5,7 @@ import com.pruqa.matchmakercombiner.messanger.DefaultCombinerProducer;
 import com.pruqa.matchmakercombiner.model.MatchMakingStatus;
 import com.pruqa.matchmakercombiner.model.Player;
 import com.pruqa.matchmakercombiner.repository.PlayerRepository;
-import com.pruqa.matchmakerlibrary.model.FailureMatchMessage;
+import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
 import com.pruqa.matchmakerlibrary.model.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +58,11 @@ public class DefaultWakerCombinerService extends WakerCombinerService {
     void notifyMatchFailure(Player player) {
         log.error("Failed to match player {}", player.toString());
         combinerProducer
-                .addToErrorQueue(FailureMatchMessage
+                .addToResultQueue(MatchResultMessage
                 .builder()
-                .failureCode(ResponseCode.NO_MATCHING_PLAYER)
-                .failureMessage("Additional message")
-                .playerId(player.getPlayerId())
+                .responseCode(ResponseCode.NO_MATCHING_PLAYER)
+                .responseMessage("Additional message")
+                .inputPlayer(player.getPlayerId())
                 .gameName(player.getGameName())
                 .build());
     }

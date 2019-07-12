@@ -1,6 +1,6 @@
 package com.pruqa.matchmakerpreparer.messanger;
 
-import com.pruqa.matchmakerlibrary.model.FailureMatchMessage;
+import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,8 @@ public class DefaultPlayerProducer implements PlayerProducer {
     }
 
     @Override
-    public void addToErrorQueue(FailureMatchMessage failureMatchMessage) {
-        log.error("An error occurred here, {}", failureMatchMessage.toString());
-        failureRabbitTemplate.convertAndSend(failureMatchMessage);
+    public void addToErrorQueue(MatchResultMessage matchResultMessage) {
+        log.error("An error occurred here, {}", matchResultMessage.toString());
+        failureRabbitTemplate.convertAndSend(matchResultMessage);
     }
 }

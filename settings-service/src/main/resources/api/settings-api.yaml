@@ -66,6 +66,56 @@ paths:
           description: Game settings and rules are not valid
           content: {}
       deprecated: false
+  /api/v1/internal/company/get:
+    post:
+      tags:
+        - settings-controller
+      summary: Recover the company api settings
+      description: This operation can be used to recover the company api settings
+      operationId: getCompanyApiSettingsUsingPOST
+      parameters:
+        - name: requestId
+          in: header
+          description: Id of the request
+          required: true
+          schema:
+            type: string
+        - name: sessionId
+          in: header
+          description: Id of the session
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: companyApiRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyApiRequest'
+        required: true
+      responses:
+        200:
+          description: The service received correctly the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyApiResponse'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Game not found
+          content: {}
+        406:
+          description: Settings are not valid
+          content: {}
+      deprecated: false
   /api/v1/internal/games/get:
     post:
       tags:
@@ -183,14 +233,17 @@ components:
       title: Game
       type: object
       properties:
+        failureResponseEndpoint:
+          type: string
+          description: Company endpoint for callback for failure matches
         gameName:
           type: string
           description: Name of the game
         gameSetting:
           $ref: '#/components/schemas/GameSetting'
-        responseEndpoint:
+        successResponseEndpoint:
           type: string
-          description: Company endpoint for callback
+          description: Company endpoint for callback for successful matches
     GameAttribute:
       title: GameAttribute
       type: object
@@ -218,6 +271,13 @@ components:
           type: number
           description: Percentage range of verification for the entire attributes
           format: double
+    CompanyApiRequest:
+      title: CompanyApiRequest
+      type: object
+      properties:
+        gameName:
+          type: string
+          description: Name of the game present on our database
     SettingsRequest:
       title: SettingsRequest
       type: object
@@ -225,6 +285,19 @@ components:
         gameName:
           type: string
           description: Name of the game present on our database
+    CompanyApiResponse:
+      title: CompanyApiResponse
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of the company is necessary to identify your settings
+        failureResponseEndpoint:
+          type: string
+          description: Company endpoint for callback for failure matches
+        successResponseEndpoint:
+          type: string
+          description: Company endpoint for callback for successful matches
     CompanyRequest:
       title: CompanyRequest
       type: object

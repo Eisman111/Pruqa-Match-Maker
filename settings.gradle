@@ -9,6 +9,7 @@
 
 rootProject.name = 'PruqaMatchMaker'
 
+include 'matchmaker-library'
 include 'starter-service'
 include 'settings-service'
 include 'preparer-service'
@@ -17,5 +18,4 @@ include 'discovery-service'
 include 'combiner-service'
 include 'authorization-service'
 include 'admin-service'
-include 'matchmaker-library'
 include 'caller-service'

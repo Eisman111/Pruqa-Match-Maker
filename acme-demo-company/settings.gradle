@@ -3,4 +3,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'matchmakerpreparer'
+rootProject.name = 'acmedemocompany'

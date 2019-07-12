@@ -5,9 +5,10 @@ import com.pruqa.matchmakercombiner.messanger.CombinerProducer;
 import com.pruqa.matchmakercombiner.messanger.DefaultCombinerProducer;
 import com.pruqa.matchmakercombiner.model.MatchMakingStatus;
 import com.pruqa.matchmakercombiner.model.MatchOperation;
-import com.pruqa.matchmakerlibrary.model.SuccessMatchMessage;
 import com.pruqa.matchmakercombiner.model.Player;
 import com.pruqa.matchmakercombiner.repository.PlayerRepository;
+import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
+import com.pruqa.matchmakerlibrary.model.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,14 +116,15 @@ public class CounterCombinerService extends CombinerService {
     @Override
     protected void notifyClient(Player player, Player matchedPlayer) {
         log.info("Matched two players >>>>>>>>>>>>>>>>> {} >>>>>>>>> {}",player.toString(),matchedPlayer.toString());
-        combinerProducer.addToSuccessQueue(buildMatchedPlayersMessage(player, matchedPlayer));
+        combinerProducer.addToResultQueue(buildMatchedPlayersMessage(player, matchedPlayer));
     }
 
-    private SuccessMatchMessage buildMatchedPlayersMessage(final Player player, final Player matchedPlayer) {
-        return SuccessMatchMessage
+    private MatchResultMessage buildMatchedPlayersMessage(final Player player, final Player matchedPlayer) {
+        return MatchResultMessage
                 .builder()
-                .playerOneId(player.getPlayerId())
-                .playerTwoId(matchedPlayer.getPlayerId())
+                .responseCode(ResponseCode.MATCHED)
+                .inputPlayer(player.getPlayerId())
+                .matchedPlayer(matchedPlayer.getPlayerId())
                 .gameName(player.getGameName())
                 .build();
     }
