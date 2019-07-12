@@ -16,11 +16,7 @@ public class CompanyApiResponse {
     @NotBlank(message = "Company name can not be blank")
     private String companyName;
 
-    @ApiModelProperty(notes = "Company endpoint for callback for successful matches")
+    @ApiModelProperty(notes = "Company endpoint for callback for response")
     @NotBlank(message = "Company endpoint cannot be blank")
-    private String successResponseEndpoint;
-
-    @ApiModelProperty(notes = "Company endpoint for callback for failure matches")
-    @NotBlank(message = "Company endpoint cannot be blank")
-    private String failureResponseEndpoint;
+    private String responseEndpoint;
 }

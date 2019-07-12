@@ -26,7 +26,7 @@ project(':matchmaker-library') {
         spi
     }
     task spiJar(type: Jar) {
-        archiveBaseName = 'api-spi'
+        archiveBaseName = 'matchmaker-library-spi'
         from sourceSets.main.output
         include('com/pruqa/matchmakerlibrary/**')
     }
@@ -39,22 +39,17 @@ project(':preparer-service') {
     dependencies {
 
         compile project(path: ':matchmaker-library', configuration: 'spi')
-//        compile project(':matchmaker-library')
     }
 }
 
 project(':combiner-service') {
     dependencies {
         compile project(path: ':matchmaker-library', configuration: 'spi')
-
-//        compile project(':matchmaker-library')
     }
 }
 
 project(':caller-service') {
     dependencies {
         compile project(path: ':matchmaker-library', configuration: 'spi')
-
-//        compile project(':matchmaker-library')
     }
 }

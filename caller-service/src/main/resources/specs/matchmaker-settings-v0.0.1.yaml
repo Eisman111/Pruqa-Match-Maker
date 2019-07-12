@@ -11,7 +11,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0"
   version: 0.0.1
 servers:
-  - url: //localhost:8080/settings
+  - url: //localhost:10100/settings
 tags:
   - name: settings-controller
     description: Settings Controller
@@ -233,17 +233,14 @@ components:
       title: Game
       type: object
       properties:
-        failureResponseEndpoint:
-          type: string
-          description: Company endpoint for callback for failure matches
         gameName:
           type: string
           description: Name of the game
         gameSetting:
           $ref: '#/components/schemas/GameSetting'
-        successResponseEndpoint:
+        responseEndpoint:
           type: string
-          description: Company endpoint for callback for successful matches
+          description: Company endpoint for callback for result
     GameAttribute:
       title: GameAttribute
       type: object
@@ -292,12 +289,9 @@ components:
         companyName:
           type: string
           description: Name of the company is necessary to identify your settings
-        failureResponseEndpoint:
+        responseEndpoint:
           type: string
-          description: Company endpoint for callback for failure matches
-        successResponseEndpoint:
-          type: string
-          description: Company endpoint for callback for successful matches
+          description: Company endpoint for callback for response
     CompanyRequest:
       title: CompanyRequest
       type: object

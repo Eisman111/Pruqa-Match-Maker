@@ -1,10 +1,14 @@
 package com.pruqa.matchmakerlibrary.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MatchResultMessage {
 
     private ResponseCode responseCode;

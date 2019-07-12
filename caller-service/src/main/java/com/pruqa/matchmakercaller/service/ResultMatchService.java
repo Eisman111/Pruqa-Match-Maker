@@ -1,5 +1,6 @@
 package com.pruqa.matchmakercaller.service;
 
+import com.pruqa.matchmakercaller.generated.caller.CompanyControllerApi;
 import com.pruqa.matchmakercaller.generated.settings.invoker.ApiException;
 import com.pruqa.matchmakercaller.generated.settings.model.CompanyApiResponse;
 import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
@@ -11,10 +12,14 @@ public abstract class ResultMatchService implements IResultMatchService {
 
         CompanyApiResponse companyApiResponse = fetchCompanyApi(message.getGameName());
 
-        notifyResultMatch(message,companyApiResponse);
+        CompanyControllerApi serverApi = getApiForCompany(companyApiResponse);
+
+        notifyResultMatch(message, serverApi);
     }
 
     abstract CompanyApiResponse fetchCompanyApi(String gameName) throws ApiException;
 
-    abstract void notifyResultMatch(MatchResultMessage matchMessage, CompanyApiResponse companyApiResponse);
+    abstract CompanyControllerApi getApiForCompany(CompanyApiResponse companyApiResponse);
+
+    abstract void notifyResultMatch(MatchResultMessage matchMessage, CompanyControllerApi serverApi);
 }

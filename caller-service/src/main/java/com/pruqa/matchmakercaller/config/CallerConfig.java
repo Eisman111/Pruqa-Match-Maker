@@ -16,13 +16,4 @@ public class CallerConfig {
     public SettingsControllerApi settingsApi() {
         return new SettingsControllerApi();
     }
-
-    /**
-     * Access to the Caller Service API
-     * @return companyControllerApi
-     */
-    @Bean
-    public CompanyControllerApi companyControllerApi() {
-        return new CompanyControllerApi();
-    }
 }

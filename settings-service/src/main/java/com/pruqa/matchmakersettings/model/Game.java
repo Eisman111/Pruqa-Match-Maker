@@ -32,15 +32,10 @@ public class Game {
     @JsonIgnore
     private String companyName;
 
-    @ApiModelProperty(notes = "Company endpoint for callback for successful matches")
+    @ApiModelProperty(notes = "Company endpoint for callback for result")
     @NotBlank(message = "Company endpoint cannot be blank")
-    @Column(name = "SUCCESS_RESPONSE_ENDPOINT")
-    private String successResponseEndpoint;
-
-    @ApiModelProperty(notes = "Company endpoint for callback for failure matches")
-    @NotBlank(message = "Company endpoint cannot be blank")
-    @Column(name = "FAILURE_RESPONSE_ENDPOINT")
-    private String failureResponseEndpoint;
+    @Column(name = "RESPONSE_ENDPOINT")
+    private String responseEndpoint;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "game_settings",
