@@ -8,9 +8,12 @@ import com.pruqa.matchmakercaller.generated.settings.invoker.ApiException;
 import com.pruqa.matchmakercaller.generated.settings.model.CompanyApiRequest;
 import com.pruqa.matchmakercaller.generated.settings.model.CompanyApiResponse;
 import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
+import com.pruqa.matchmakerlibrary.model.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.pruqa.matchmakerlibrary.model.ResponseCode.*;
 
 @Slf4j
 @Service
@@ -48,16 +51,16 @@ public class DefaultResultMatchService extends ResultMatchService {
 
        switch (resultMessage.getResponseCode()) {
            case MATCHED:
-               result.setResponseCode(MatchMakerResult.ResponseCodeEnum.MATCHED);
+               result.setResponseCode(MATCHED.getResponseCode());
                result.setMatchedPlayer(resultMessage.getMatchedPlayer());
                break;
            case NO_MATCHING_PLAYER:
-               result.setResponseCode(MatchMakerResult.ResponseCodeEnum.NO_MATCHING_PLAYERS);
+               result.setResponseCode(NO_MATCHING_PLAYER.getResponseCode());
                result.setResponseMessage(resultMessage.getResponseMessage());
                break;
            case GENERIC_ERROR:
                default:
-                   result.setResponseCode(MatchMakerResult.ResponseCodeEnum.GENERIC_ERROR);
+                   result.setResponseCode(GENERIC_ERROR.getResponseCode());
                    result.setResponseMessage(resultMessage.getResponseMessage());
                    break;
        }

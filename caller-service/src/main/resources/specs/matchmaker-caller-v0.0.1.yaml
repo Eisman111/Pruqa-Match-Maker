@@ -83,13 +83,9 @@ components:
           description: The player matched to the input player. Can be null in case
             of errors
         responseCode:
-          type: string
+          type: integer
           description: The response of the match making operation for the playerOne
-          enum:
-            - ResponseCode.MATCHED
-            - ResponseCode.INVALID_PLAYER_ATTRIBUTES
-            - ResponseCode.NO_MATCHING_PLAYERS
-            - ResponseCode.GENERIC_ERROR
+          format: int32
         responseMessage:
           type: string
           description: The response message that support the responseCode

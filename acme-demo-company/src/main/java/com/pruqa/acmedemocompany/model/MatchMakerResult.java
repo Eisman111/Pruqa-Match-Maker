@@ -2,8 +2,10 @@ package com.pruqa.acmedemocompany.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
@@ -11,10 +13,12 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Builder
 @ApiModel(value = "MatchMakerResult")
+@NoArgsConstructor
+@AllArgsConstructor
 public class MatchMakerResult {
 
     @ApiModelProperty(notes = "The response of the match making operation for the playerOne")
-    private ResponseCode responseCode;
+    private int responseCode;
 
     @ApiModelProperty(notes = "The response message that support the responseCode")
     private String responseMessage;
