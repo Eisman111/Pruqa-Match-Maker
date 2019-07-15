@@ -45,6 +45,11 @@ public class CustomUserDetailService implements UserDetailsService {
         return user;
     }
 
+    /**
+     * Convert the Company into the security User
+     * @param company Company
+     * @return User
+     */
     private User buildUserFromUserEntity(final Company company) {
         // convert model user to spring security user
         String username = company.getCompanyEmail();
@@ -56,9 +61,6 @@ public class CustomUserDetailService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
 
-        User springUser = new User(username, password, enabled,
-                accountNonExpired, credentialsNonExpired, accountNonLocked,
-                authorities);
-        return springUser;
+        return new User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 }

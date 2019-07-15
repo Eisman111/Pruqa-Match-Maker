@@ -24,8 +24,6 @@ public class DefaultPlayerConsumer implements PlayerConsumer {
     @RabbitListener(queues = {"${app.rabbitmq.queue}"},
     containerFactory = "listenerContainerFactory")
     public void readMessage(final MessagePlayer message) {
-        log.info(">>>>>>>>>>>>>> {}", message.toString());
         Player player = service.prepareFlow(message);
-        log.info(">>> {}", player.toString());
     }
 }

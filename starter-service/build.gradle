@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.1.5.RELEASE'
     id 'java'
     id "org.openapi.generator" version "4.0.2"
+    id 'groovy'
 }
 
 apply plugin: 'io.spring.dependency-management'

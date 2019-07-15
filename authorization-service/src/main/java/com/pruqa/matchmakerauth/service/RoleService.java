@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class RoleService {
 
     // == fields ==
-    public RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     // == constructor ==
     @Autowired
@@ -18,7 +18,10 @@ public class RoleService {
     }
 
     // == init ==
-    // This is necessary to create the default role and avoid errors on empty db
+    /**
+     * Create default role
+     * NOTE: This method is necessary for new dbs
+     */
     public void createDefaultRole() {
         if (roleRepository.findByRole("USER") == null) {
             roleRepository.save(new Role(1,"USER"));

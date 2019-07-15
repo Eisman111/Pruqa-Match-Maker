@@ -15,6 +15,9 @@ public class WakerPlayersScheduler {
         this.service = service;
     }
 
+    /**
+     * On a fixed rate try to wake up each player that is sleeping
+     */
     @Scheduled(fixedRate = 1000)
     private void wakeUp() {
         service.wakeUpPlayers();

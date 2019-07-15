@@ -6,6 +6,11 @@ import com.pruqa.matchmakerpreparer.model.Player;
 
 public abstract class PreparerService implements IPreparerService {
 
+    /**
+     * Prepare the player for matchmaking
+     * @param messagePlayer rabbit player message
+     * @return player added to the db
+     */
     @Override
     public Player prepareFlow(final MessagePlayer messagePlayer) {
 

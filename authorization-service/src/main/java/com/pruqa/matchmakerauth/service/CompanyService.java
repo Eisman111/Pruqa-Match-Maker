@@ -47,12 +47,22 @@ public class CompanyService {
 
     }
 
-    // == public methods ==
+    // == public methods =
+    /**
+     * Find the company on the repository searching by encrypted email
+     * @param email String
+     * @return Company
+     */
     public Company findCompanyByEncryptedEmail(final String email) {
         final Company company = companyRepository.findByCompanyEmail(email);
-        return decriptCompany(company);
+        return decryptCompany(company);
     }
 
+    /**
+     * Find a company from the repository searching by decrypted email
+     * @param email String
+     * @return Company
+     */
     public Company findCompanyByDecryptedEmail(final String email) {
         List<Company> companies = companyRepository.findByActive(1);
         for (Company u : companies) {
@@ -64,6 +74,10 @@ public class CompanyService {
         return null;
     }
 
+    /**
+     * Create a new Company and save it into the repository
+     * @param company Company
+     */
     public void createUser(final Company company) {
         company.setPassword(bCryptPasswordEncoder.encode(company.getPassword()));
         company.setActive(1);
@@ -74,7 +88,12 @@ public class CompanyService {
         companyRepository.save(company);
     }
 
-    private Company decriptCompany(final Company company) {
+    /**
+     * Decrypt the input company
+     * @param company Company
+     * @return Company
+     */
+    private Company decryptCompany(final Company company) {
         Company decriptedCompany = new Company();
         BeanUtils.copyProperties(company,decriptedCompany);
         decriptedCompany.setCompanyName(eTextEncryptor.decrypt(decriptedCompany.getCompanyName()));

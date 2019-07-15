@@ -5,5 +5,10 @@ import com.pruqa.matchmakerlibrary.model.MatchResultMessage;
 
 public interface IResultMatchService {
 
+    /**
+     * Notify the client of the match result
+     * @param message MatchResultMessage
+     * @throws ApiException
+     */
     void notifyResultFlow(MatchResultMessage message) throws ApiException;
 }

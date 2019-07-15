@@ -37,11 +37,15 @@ public class CounterCombinerService extends CombinerService {
             throw new NoPlayerToMatchFoundException(null);
         }
 
-        log.info("FOUND PLAYER >>>>>>>>> {}", player.toString());
-
         return player;
     }
 
+    /**
+     * Find a player that has a similar value of total points based on the range defined in the settings
+     * For each new tentative increase the range and try to get the closest player
+     * @param inputPlayer Player
+     * @return Player
+     */
     @Override
     protected Player findPlayerMatch(Player inputPlayer) {
 
@@ -62,13 +66,19 @@ public class CounterCombinerService extends CombinerService {
 
         foundPlayer = players
                 .stream()
-                .peek(player -> log.info("DEBUG PEEKED PLAYER {}", player.toString()))
+                .peek(player -> log.debug("Found player matching boundaries {}", player.toString()))
                 .min(Comparator.comparingDouble(p -> Math.abs(p.getPoints() - inputPlayer.getPoints())))
                 .orElse(null);
 
         return foundPlayer;
     }
 
+    /**
+     * Get the boundaries of the player total points based on settings absolute or relative value
+     * Increase those boundaries for each tentative
+     * @param inputPlayer Player
+     * @return Map of boundaries
+     */
     private Map<String, Double> getPointsBoundariesForGame(Player inputPlayer) {
         Map<String, Double> boundaries = new HashMap<>();
 
@@ -84,7 +94,6 @@ public class CounterCombinerService extends CombinerService {
             minBoundarary = points - ((points * percentageRange) * tentative);
         }
 
-        log.info("MINUM PLAYER {}", minBoundarary);
         boundaries.put("min",minBoundarary);
 
         Double maxBoundarary;
@@ -94,7 +103,6 @@ public class CounterCombinerService extends CombinerService {
             maxBoundarary = points + ((points * percentageRange) * tentative);
         }
 
-        log.info("MAX PLAYER {}", maxBoundarary);
         boundaries.put("max",maxBoundarary);
 
         return boundaries;
@@ -108,17 +116,23 @@ public class CounterCombinerService extends CombinerService {
     }
 
     @Override
-    void updateMatchMakingTentative(Player player) {
+    void increasePlayerTentatives(Player player) {
         player.getMatchOperation().setTentative(player.getMatchOperation().getTentative() + 1);
         repository.save(player);
     }
 
     @Override
     protected void notifyClient(Player player, Player matchedPlayer) {
-        log.info("Matched two players >>>>>>>>>>>>>>>>> {} >>>>>>>>> {}",player.toString(),matchedPlayer.toString());
+        log.info("Matched two players {}, {}",player.toString(),matchedPlayer.toString());
         combinerProducer.addToResultQueue(buildMatchedPlayersMessage(player, matchedPlayer));
     }
 
+    /**
+     * Build the message for the queue with the resulting match between players
+     * @param player Player
+     * @param matchedPlayer Player
+     * @return MatchResultMessage
+     */
     private MatchResultMessage buildMatchedPlayersMessage(final Player player, final Player matchedPlayer) {
         return MatchResultMessage
                 .builder()

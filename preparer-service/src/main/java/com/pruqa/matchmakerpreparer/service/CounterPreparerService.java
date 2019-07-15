@@ -31,6 +31,11 @@ public class CounterPreparerService extends PreparerService {
         this.repository = repository;
     }
 
+    /**
+     * Get the input player message and convert it into the Player object by cloning it's properties
+     * @param messagePlayer rabbit Player Message
+     * @return player
+     */
     @Override
     Player convertMessage(MessagePlayer messagePlayer) {
         Player player = new Player();
@@ -40,6 +45,12 @@ public class CounterPreparerService extends PreparerService {
         return player;
     }
 
+    /**
+     * Fetch the game settings from the SettingsAPI searching by game name
+     * In case of failure to contact settings API an UnavailablePreparationException will be thrown
+     * @param player Player
+     * @return game settings
+     */
     @Override
     GameSetting fetchGameSettings(Player player) {
 
@@ -58,11 +69,22 @@ public class CounterPreparerService extends PreparerService {
         return gameSetting;
     }
 
+    /**
+     * Add the game settings to the player
+     * @param player input player
+     * @param gameSettings settings for specific game
+     */
     @Override
     void addPlayerSettings(final Player player, final GameSetting gameSettings) {
         player.setGameSetting(gameSettings);
     }
 
+    /**
+     * Simple calculator for skill points matching player attributes with game rules multiplier
+     * In case of points equals or less then 0, meaning no match is found, a InvalidMatchMakingAlgorithmException is thrown
+     * @param player input player
+     * @return
+     */
     @Override
     Double calculateSkillPoints(Player player) {
         double points = 0.0;
@@ -78,11 +100,22 @@ public class CounterPreparerService extends PreparerService {
         return points;
     }
 
+    /**
+     * Add the input skill points to the player
+     * @param player Player
+     * @param points match making points
+     */
     @Override
     void addSPlayerkillPoints(Player player, Double points) {
         player.setPoints(points);
     }
 
+    /**
+     * Save the player on the repository for further elaboration
+     * In case of any problem throw a UnavailablePreparationException
+     * @param player Player
+     * @return player added to the repository
+     */
     @Override
     Player savePlayer(Player player) {
         Player savedPlayer;

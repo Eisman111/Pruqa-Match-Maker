@@ -17,9 +17,25 @@ public abstract class ResultMatchService implements IResultMatchService {
         notifyResultMatch(message, serverApi);
     }
 
+    /**
+     * Fetch the company details from the SettingsApi searching by game name
+     * @param gameName String
+     * @return CompanyApiResponse
+     * @throws ApiException
+     */
     abstract CompanyApiResponse fetchCompanyApi(String gameName) throws ApiException;
 
+    /**
+     * Build the Api for contacting the client company endpoint
+     * @param companyApiResponse CompanyApiResponse
+     * @return CompanyControllerApi
+     */
     abstract CompanyControllerApi getApiForCompany(CompanyApiResponse companyApiResponse);
 
+    /**
+     * Notify the client of the result
+     * @param matchMessage MatchResultMessage
+     * @param serverApi CompanyControllerApi
+     */
     abstract void notifyResultMatch(MatchResultMessage matchMessage, CompanyControllerApi serverApi);
 }

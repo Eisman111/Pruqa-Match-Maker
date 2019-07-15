@@ -19,6 +19,11 @@ public class FailureQueueMessageRecoverer extends RejectAndDontRequeueRecoverer 
         this.messageProducer = producer;
     }
 
+    /**
+     * Once if failed to recover a message from the queue send it to the error queue and throw a AmqpRejectAndDontRequeueException
+     * @param message queue message
+     * @param cause error throwable
+     */
     @Override
     public void recover(Message message, Throwable cause) {
 
