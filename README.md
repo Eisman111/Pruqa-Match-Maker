@@ -16,7 +16,9 @@ The client will be then notified each time a player has found a match or if ther
 of tentatives exceed the limit defined in the settings).
 
 How to use this:
+
 **Register the Company for the Oauth2 Token**
+
 `
 curl -X POST \
   http://localhost:8080/security/register \
@@ -33,6 +35,7 @@ curl -X POST \
 `
 
 **Authorize the session by requesting the Oauth2 Bearer Token**
+
 `
 curl -X POST \
   http://localhost:8080/security/oauth/token \
@@ -43,6 +46,7 @@ curl -X POST \
 `
 
 **Add a game to the service**
+
 `
 curl -X POST \
   http://localhost:8080/settings/api/v1/public/games/add \
@@ -83,6 +87,7 @@ curl -X POST \
 `
 
 **Add a player to the service**
+
 `
 curl -X POST \
   http://localhost:8080/starter/api/v1/public/players/add \
